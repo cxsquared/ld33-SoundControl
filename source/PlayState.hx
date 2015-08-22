@@ -3,7 +3,6 @@ package;
 import managers.CitizenManager;
 import managers.SoundManager;
 import managers.UIController;
-import entities.SoundManager;
 import flixel.util.FlxRandom;
 import flixel.group.FlxTypedGroup;
 import flixel.util.FlxCollision;
@@ -20,7 +19,7 @@ import flixel.util.FlxMath;
  */
 class PlayState extends FlxState
 {
-    var floor:FlxSprite;
+    var bounds:FlxTypedGroup<FlxSprite>;
     public var citizens:CitizenManager;
     var ui:UIController;
     public var soundManager = new SoundManager();
@@ -35,17 +34,38 @@ class PlayState extends FlxState
         ui = new UIController(this, FlxG.height/3*2);
         add(ui);
 
-		floor = new FlxSprite(0, FlxG.height/3*2);
-        floor.makeGraphic(FlxG.width, 20);
-        floor.immovable = true;
-        add(floor);
+        setUpBounds();
+
+
 
         addCitizens();
 
 	}
 
+    private function setUpBounds():Void {
+        bounds = new FlxTypedGroup<FlxSprite>();
+        var floor = new FlxSprite(0, FlxG.height/3*2);
+        floor.makeGraphic(FlxG.width, 20);
+        floor.immovable = true;
+        bounds.add(floor);
+
+        var wall = new FlxSprite(0, 0);
+        wall.makeGraphic(20, Std.int(FlxG.height/3*2));
+        wall.x -= wall.width/2;
+        wall.immovable = true;
+        bounds.add(wall);
+
+        var wall = new FlxSprite(FlxG.width, 0);
+        wall.makeGraphic(20, Std.int(FlxG.height/3*2));
+        wall.x -= wall.width/2;
+        wall.immovable = true;
+        bounds.add(wall);
+
+        add(bounds);
+    }
+
     private function addCitizens():Void {
-        citizens = new FlxTypedGroup<Citizen>();
+        citizens = new CitizenManager(this);
         citizens.addCitizens(25);
         add(citizens);
     }
@@ -66,6 +86,6 @@ class PlayState extends FlxState
 	{
 		super.update();
 
-        FlxG.collide(floor, citizens);
+        FlxG.collide(bounds, citizens);
 	}
 }

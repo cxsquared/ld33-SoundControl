@@ -18,13 +18,16 @@ class Citizen extends FlxSprite {
     public static var WAIT_TIME_MIN = 0.5;
     public static var WAIT_TIME_MAX = 3;
 
-    public var walkChance = 50;
+    public var walkChance:Float = 50;
     public var walking = false;
     private var walkTargetX:Float = 0;
+    private var walkTime:Float = 0;
+    private var maxWalkTime = 10;
 
-    public var fightChance = 15;
+    public var fightChance:Float = 15;
     public var fighting = false;
     public var fightTarget:Citizen;
+    public var runChance:Float = 10;
     public var punchChance = .15;
 
     private var taskTimer:FlxTimer;
@@ -106,7 +109,7 @@ class Citizen extends FlxSprite {
                     fightTarget.clearTasks();
                     fightTarget.fighting = true;
                     fightTarget.fightTarget = this;
-                    //FlxG.log.add(name + " Starting to fight");
+                    FlxG.log.add(name + " Starting to fight with " + fightTarget.name);
                 }
             }
         }
@@ -120,6 +123,7 @@ class Citizen extends FlxSprite {
         //FlxG.log.add("Walking..." + this.x + ":" + walkTargetX);
         FlxVelocity.moveTowardsPoint(this, new FlxPoint(walkTargetX + this.width/2, this.y));
         animation.play("walking");
+        walkTime += FlxG.elapsed;
 
         if (walkTargetX > this.x ) {
             this.facing = FlxObject.RIGHT;
@@ -127,8 +131,9 @@ class Citizen extends FlxSprite {
             this.facing = FlxObject.LEFT;
         }
 
-        if (Math.round(this.x) == Math.round(walkTargetX)) {
+        if (Math.round(this.x) == Math.round(walkTargetX) || walkTime > maxWalkTime) {
             walking = false;
+            walkTime = 0;
            // FlxG.log.add(name + " Done Walking");
             return false;
         }
@@ -167,6 +172,13 @@ class Citizen extends FlxSprite {
             return false;
         }
 
+        if (FlxRandom.chanceRoll(runChance)) {
+            FlxG.log.add(name + " ran from " + fightTarget.name);
+            fightTarget.clearTasks();
+            this.clearTasks();
+            return false;
+        }
+
         return true;
     }
 
@@ -174,6 +186,7 @@ class Citizen extends FlxSprite {
         waiting = false;
         walking = false;
         fighting = false;
+        fightTarget = null;
     }
 
     override public function kill():Void {

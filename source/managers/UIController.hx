@@ -2,7 +2,6 @@ package managers;
 import PlayState;
 import flixel.util.FlxColor;
 import flixel.FlxG;
-import entities.SoundManager;
 import flixel.addons.ui.FlxSlider;
 import flixel.group.FlxGroup;
 class UIController extends FlxGroup {
@@ -25,5 +24,9 @@ class UIController extends FlxGroup {
         metalSldr = new FlxSlider(SoundManager.soundLevels, "Metal", FlxG.width/4 - (FlxG.width/2 - (offset*2))/2, (this.y + offset), 0, 1, cast(FlxG.width/2 - (offset*2), Int), cast((FlxG.height-this.y)/2 - (offset*2), Int), 3, FlxColor.RED, FlxColor.BLUE);
         //metalSldr.x -= metalSldr.width/2;
         add(metalSldr);
+    }
+
+    override public function update():Void {
+        super.update();
     }
 }
