@@ -39,6 +39,7 @@ class PlayState extends FlxState
 
 
         addCitizens();
+        citizens.callAll("addHair");
 
 	}
 
@@ -66,7 +67,7 @@ class PlayState extends FlxState
 
     private function addCitizens():Void {
         citizens = new CitizenManager(this);
-        citizens.addCitizens(25);
+        citizens.addCitizens(5);
         add(citizens);
     }
 	

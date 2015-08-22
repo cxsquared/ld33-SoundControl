@@ -19,28 +19,42 @@ class Citizen extends FlxSprite {
     public static var WAIT_TIME_MIN = 0.5;
     public static var WAIT_TIME_MAX = 3;
 
+    //Walk
     public var walkChance:Float = 50;
     public var walking = false;
     private var walkTargetX:Float = 0;
     private var walkTime:Float = 0;
     private var maxWalkTime = 10;
 
+    //Fight
     public var fightChance:Float = 15;
     public var fighting = false;
     public var fightTarget:Citizen;
     public var runChance:Float = 10;
     public var punchChance = .15;
 
+    //Wait
     private var taskTimer:FlxTimer;
     public var waiting = false;
 
+    //Suicide
     public var killSelf = false;
     private var suicideChance = 10;
+
+    //Dance
+    public var dancing = false;
+    public var danceChance = 20;
+    public var danceDeathChance = .1;
+    private var danceTime:Float = 0;
+    private var maxDanceTime = 10;
+    public var danceQuitChance = .5;
 
     public var name = "No One";
     private var nameText:FlxText;
 
     private var state:PlayState;
+
+    private var hair:FlxSprite;
 
     public function new(X:Float=0, Y:Float=0, State:PlayState=null) {
         super(X, Y);
@@ -56,6 +70,27 @@ class Citizen extends FlxSprite {
 
         acceleration.y = 600;
 
+        addName();
+    }
+
+    public function addHair():Void {
+        hair = new FlxSprite(this.x, this.y);
+        hair.loadGraphic(AssetPaths.hair__png, true, CITIZEN_WIDTH, 30);
+        hair.animation.add("0", [0], 0, false);
+        hair.animation.add("1", [1], 0, false);
+        hair.animation.add("2", [2], 0, false);
+        hair.animation.add("3", [3], 0, false);
+        hair.animation.add("4", [4], 0, false);
+        hair.animation.add("5", [5], 0, false);
+        hair.animation.play(Std.string(FlxRandom.intRanged(0, 5)));
+        hair.color = FlxColorUtil.getRandomColor();
+        //state.add(hair);
+
+        hair.setFacingFlip(FlxObject.LEFT, true, false);
+        hair.setFacingFlip(FlxObject.RIGHT, false, false);
+    }
+
+    private function addName():Void {
         name = Names.getName();
         nameText = new FlxText(this.x, this.y, this.width, this.name);
         nameText.color = this.color;
@@ -72,6 +107,7 @@ class Citizen extends FlxSprite {
         animation.add("walking", [1,2,3,4,5,6], 12, true);
         animation.add("fighting", [7, 8, 7], 6, true);
         animation.add("punch", [9, 7], 6, false);
+        animation.add("dance", [10, 11, 12, 11, 12], 6, true);
         animation.play("waiting");
     }
 
@@ -81,8 +117,13 @@ class Citizen extends FlxSprite {
         nameText.x = this.x + nameText.width/4;
         nameText.y = this.y - nameText.height;
 
+        hair.x = this.x;
+        hair.y = this.y;
+        hair.facing = this.facing;
+
         if (health <= 0) {
             nameText.kill();
+            hair.kill();
             this.clearTasks();
             this.kill();
         }
@@ -92,6 +133,14 @@ class Citizen extends FlxSprite {
             }
 
             if (fight()) {
+                return;
+            }
+
+            if (chat()) {
+                return;
+            }
+
+            if (dance()) {
                 return;
             }
 
@@ -127,6 +176,9 @@ class Citizen extends FlxSprite {
                     fightTarget.fightTarget = this;
                     FlxG.log.add(name + " Starting to fight with " + fightTarget.name);
                 }
+            } else if (FlxRandom.chanceRoll(danceChance)) {
+                danceTime = 0;
+                dancing = true;
             }
         }
     }
@@ -216,10 +268,40 @@ class Citizen extends FlxSprite {
         return true;
     }
 
+    private function chat():Bool {
+        return false;
+    }
+
+    private function dance():Bool {
+        if (!dancing) {
+            return false;
+        }
+
+        animation.play("dance");
+        danceTime += FlxG.elapsed;
+
+        if (danceTime > maxDanceTime/4*3 && FlxRandom.chanceRoll(danceDeathChance)) {
+            this.health = 0;
+            FlxG.log.add(name + " has Danced to death.");
+            return false;
+        }
+
+        if (danceTime > maxDanceTime) {
+            dancing = false;
+            danceTime = 0;
+            return false;
+        }
+
+        return true;
+    }
+
     public function clearTasks():Void {
         waiting = false;
         walking = false;
+        walkTime = 0;
         fighting = false;
+        dancing = false;
+        danceTime = 0;
         fightTarget = null;
     }
 
