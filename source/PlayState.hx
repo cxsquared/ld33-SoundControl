@@ -1,5 +1,7 @@
 package;
 
+import flixel.util.FlxRandom;
+import flixel.group.FlxTypedGroup;
 import flixel.util.FlxCollision;
 import entities.Citizen;
 import flixel.FlxG;
@@ -15,7 +17,7 @@ import flixel.util.FlxMath;
 class PlayState extends FlxState
 {
     var floor:FlxSprite;
-    var citizen:Citizen;
+    public var citizens:FlxTypedGroup<Citizen>;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -29,9 +31,18 @@ class PlayState extends FlxState
         floor.immovable = true;
         add(floor);
 
-        citizen = new Citizen(FlxG.width/2, 300);
-        add(citizen);
+        addCitizens();
+
 	}
+
+    private function addCitizens():Void {
+        citizens = new FlxTypedGroup<Citizen>();
+        for (i in 0...25) {
+            var citizen = new Citizen(FlxRandom.floatRanged(0, FlxG.width), 300, this);
+            citizens.add(citizen);
+        }
+        add(citizens);
+    }
 	
 	/**
 	 * Function that is called when this state is destroyed - you might want to 
@@ -49,6 +60,6 @@ class PlayState extends FlxState
 	{
 		super.update();
 
-        FlxG.collide(floor, citizen);
+        FlxG.collide(floor, citizens);
 	}	
 }
