@@ -82,6 +82,8 @@ class Citizen extends FlxSprite {
         nameText.y = this.y - nameText.height;
 
         if (health <= 0) {
+            nameText.kill();
+            this.clearTasks();
             this.kill();
         }
         if (!waiting) {
@@ -160,7 +162,7 @@ class Citizen extends FlxSprite {
             return false;
         }
 
-        FlxG.log.add("Suicide Chance");
+        //FlxG.log.add("Suicide Chance");
 
         if (FlxRandom.chanceRoll(suicideChance)) {
             health = 0;
