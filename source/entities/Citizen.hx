@@ -18,11 +18,14 @@ class Citizen extends FlxSprite {
     public static var WAIT_TIME_MIN = 0.5;
     public static var WAIT_TIME_MAX = 3;
 
+    public var walkChance = 50;
     public var walking = false;
     private var walkTargetX:Float = 0;
 
+    public var fightChance = 15;
     public var fighting = false;
     public var fightTarget:Citizen;
+    public var punchChance = .15;
 
     private var taskTimer:FlxTimer;
     public var waiting = false;
@@ -87,12 +90,11 @@ class Citizen extends FlxSprite {
     private function getNewTask(t:FlxTimer):Void {
         if (waiting) {
             waiting = false;
-            var rand:Float = FlxRandom.float();
-            if (rand >= 0.5){
+            if (FlxRandom.chanceRoll(walkChance)){
                 walking = true;
-                walkTargetX = FlxRandom.floatRanged(0, FlxG.width);
+                walkTargetX = FlxRandom.floatRanged(50, FlxG.width - 50);
                 //FlxG.log.add(name + " Starting walk " + walkTargetX);
-            } else if (rand >= 0.35 && state.citizens.countLiving() >= 2) {
+            } else if (FlxRandom.chanceRoll(fightChance) && state.citizens.countLiving() >= 2) {
                 //FlxG.log.add(name + " Trying to fight");
                 fighting = true;
                 var tries = 0;
@@ -152,7 +154,7 @@ class Citizen extends FlxSprite {
 
         animation.play("fighting");
 
-        if (FlxRandom.chanceRoll(.15)) {
+        if (FlxRandom.chanceRoll(punchChance)) {
             fightTarget.health -= FlxRandom.float();
             animation.play("punch");
             FlxG.log.add(name + " Punched! " + fightTarget.name + ". They now have " + fightTarget.health + " health left.");

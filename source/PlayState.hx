@@ -1,5 +1,9 @@
 package;
 
+import managers.CitizenManager;
+import managers.SoundManager;
+import managers.UIController;
+import entities.SoundManager;
 import flixel.util.FlxRandom;
 import flixel.group.FlxTypedGroup;
 import flixel.util.FlxCollision;
@@ -17,7 +21,9 @@ import flixel.util.FlxMath;
 class PlayState extends FlxState
 {
     var floor:FlxSprite;
-    public var citizens:FlxTypedGroup<Citizen>;
+    public var citizens:CitizenManager;
+    var ui:UIController;
+    public var soundManager = new SoundManager();
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -26,7 +32,10 @@ class PlayState extends FlxState
 	{
 		super.create();
 
-		floor = new FlxSprite(0, FlxG.height - 20);
+        ui = new UIController(this, FlxG.height/3*2);
+        add(ui);
+
+		floor = new FlxSprite(0, FlxG.height/3*2);
         floor.makeGraphic(FlxG.width, 20);
         floor.immovable = true;
         add(floor);
@@ -37,10 +46,7 @@ class PlayState extends FlxState
 
     private function addCitizens():Void {
         citizens = new FlxTypedGroup<Citizen>();
-        for (i in 0...25) {
-            var citizen = new Citizen(FlxRandom.floatRanged(0, FlxG.width), 300, this);
-            citizens.add(citizen);
-        }
+        citizens.addCitizens(25);
         add(citizens);
     }
 	
@@ -61,5 +67,5 @@ class PlayState extends FlxState
 		super.update();
 
         FlxG.collide(floor, citizens);
-	}	
+	}
 }
