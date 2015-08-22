@@ -1,4 +1,6 @@
 package entities;
+import flixel.FlxObject;
+import flixel.FlxBasic;
 import flixel.util.FlxMath;
 import flixel.util.FlxMath;
 import flixel.FlxState;
@@ -11,7 +13,7 @@ import flixel.util.FlxColorUtil;
 import flixel.FlxSprite;
 class Citizen extends FlxSprite {
 
-    public static var CITIZEN_WIDTH = 50;
+    public static var CITIZEN_WIDTH = 75;
     public static var CITIZEN_HEIGHT = 100;
     public static var WAIT_TIME_MIN = 0.5;
     public static var WAIT_TIME_MAX = 3;
@@ -34,7 +36,8 @@ class Citizen extends FlxSprite {
 
         this.state = State;
 
-        makeGraphic(CITIZEN_WIDTH, CITIZEN_HEIGHT, FlxColorUtil.getRandomColor());
+        createAnimations();
+       // makeGraphic(CITIZEN_WIDTH, CITIZEN_HEIGHT, FlxColorUtil.getRandomColor());
 
         taskTimer = new FlxTimer();
         taskTimer.start(FlxRandom.floatRanged(WAIT_TIME_MIN, WAIT_TIME_MAX), getNewTask, 1);
@@ -43,6 +46,19 @@ class Citizen extends FlxSprite {
         acceleration.y = 600;
 
         name = Names.getName();
+    }
+
+    private function createAnimations():Void {
+        loadGraphic(AssetPaths.citizen__png, true, CITIZEN_WIDTH, CITIZEN_HEIGHT);
+        setFacingFlip(FlxObject.LEFT, true, false);
+        setFacingFlip(FlxObject.RIGHT, false, false);
+        this.color = FlxColorUtil.getRandomColor();
+        //this.scale.y = FlxRandom.floatRanged(0.9, 1.1);
+        animation.add("waiting", [0], 0, false);
+        animation.add("walking", [1,2,3,4,5,6], 12, true);
+        animation.add("fighting", [7, 8, 7], 6, true);
+        animation.add("punch", [9, 7], 6, false);
+        animation.play("waiting");
     }
 
     override public function update():Void {
@@ -63,6 +79,7 @@ class Citizen extends FlxSprite {
         if (!waiting) {
             taskTimer.start(FlxRandom.floatRanged(WAIT_TIME_MIN, WAIT_TIME_MAX), getNewTask, 1);
             waiting = true;
+            animation.play("waiting");
             //FlxG.log.add(name + " new timer started");
         }
     }
@@ -100,6 +117,13 @@ class Citizen extends FlxSprite {
 
         //FlxG.log.add("Walking..." + this.x + ":" + walkTargetX);
         FlxVelocity.moveTowardsPoint(this, new FlxPoint(walkTargetX + this.width/2, this.y));
+        animation.play("walking");
+
+        if (walkTargetX > this.x ) {
+            this.facing = FlxObject.RIGHT;
+        } else {
+            this.facing = FlxObject.LEFT;
+        }
 
         if (Math.round(this.x) == Math.round(walkTargetX)) {
             walking = false;
@@ -117,11 +141,20 @@ class Citizen extends FlxSprite {
 
         if (Math.abs(FlxMath.distanceBetween(this, fightTarget)) > this.width) {
             FlxVelocity.moveTowardsPoint(this, new FlxPoint(fightTarget.x + this.width/2, this.y));
+            if (fightTarget.x > this.x) {
+                facing = FlxObject.RIGHT;
+            } else {
+                facing = FlxObject.LEFT;
+            }
+            animation.play("walking");
             return true;
         }
 
+        animation.play("fighting");
+
         if (FlxRandom.chanceRoll(.15)) {
             fightTarget.health -= FlxRandom.float();
+            animation.play("punch");
             FlxG.log.add(name + " Punched! " + fightTarget.name + ". They now have " + fightTarget.health + " health left.");
         }
 
