@@ -1,5 +1,7 @@
 package;
 
+import flixel.util.FlxCollision;
+import entities.Citizen;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -12,12 +14,23 @@ import flixel.util.FlxMath;
  */
 class PlayState extends FlxState
 {
+    var floor:FlxSprite;
+    var citizen:Citizen;
+
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
 	override public function create():Void
 	{
 		super.create();
+
+		floor = new FlxSprite(0, FlxG.height - 20);
+        floor.makeGraphic(FlxG.width, 20);
+        floor.immovable = true;
+        add(floor);
+
+        citizen = new Citizen(FlxG.width/2, 300);
+        add(citizen);
 	}
 	
 	/**
@@ -35,5 +48,7 @@ class PlayState extends FlxState
 	override public function update():Void
 	{
 		super.update();
+
+        FlxG.collide(floor, citizen);
 	}	
 }
