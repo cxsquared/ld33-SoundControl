@@ -1,4 +1,5 @@
 package entities;
+import flixel.text.FlxText;
 import flixel.FlxObject;
 import flixel.FlxBasic;
 import flixel.util.FlxMath;
@@ -33,7 +34,11 @@ class Citizen extends FlxSprite {
     private var taskTimer:FlxTimer;
     public var waiting = false;
 
+    public var killSelf = false;
+    private var suicideChance = 10;
+
     public var name = "No One";
+    private var nameText:FlxText;
 
     private var state:PlayState;
 
@@ -52,6 +57,9 @@ class Citizen extends FlxSprite {
         acceleration.y = 600;
 
         name = Names.getName();
+        nameText = new FlxText(this.x, this.y, this.width, this.name);
+        nameText.color = this.color;
+        state.add(nameText);
     }
 
     private function createAnimations():Void {
@@ -70,19 +78,25 @@ class Citizen extends FlxSprite {
     override public function update():Void {
         super.update();
 
+        nameText.x = this.x + nameText.width/4;
+        nameText.y = this.y - nameText.height;
+
         if (health <= 0) {
             this.kill();
         }
-
-        if (walk()) {
-            return;
-        }
-
-        if (fight()) {
-            return;
-        }
-
         if (!waiting) {
+            if (walk()) {
+                return;
+            }
+
+            if (fight()) {
+                return;
+            }
+
+            if (suicide()){
+                return;
+            }
+
             taskTimer.start(FlxRandom.floatRanged(WAIT_TIME_MIN, WAIT_TIME_MAX), getNewTask, 1);
             waiting = true;
             animation.play("waiting");
@@ -141,6 +155,22 @@ class Citizen extends FlxSprite {
         return true;
     }
 
+    private function suicide():Bool {
+        if (!killSelf) {
+            return false;
+        }
+
+        FlxG.log.add("Suicide Chance");
+
+        if (FlxRandom.chanceRoll(suicideChance)) {
+            health = 0;
+            FlxG.log.add(name + " killed themselves!!");
+            return true;
+        }
+
+        return false;
+    }
+
     private function fight():Bool {
         if (!fighting) {
             return false;
@@ -169,6 +199,7 @@ class Citizen extends FlxSprite {
             fighting = false;
             FlxG.log.add(name + " killed " + fightTarget.name);
             fightTarget = null;
+            animation.play("waiting");
             return false;
         }
 
@@ -176,6 +207,7 @@ class Citizen extends FlxSprite {
             FlxG.log.add(name + " ran from " + fightTarget.name);
             fightTarget.clearTasks();
             this.clearTasks();
+            animation.play("waiting");
             return false;
         }
 

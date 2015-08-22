@@ -31,6 +31,7 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
 
     private function updateEmotions():Void {
         forEachAlive(updateAnger);
+        updateSuicide();
     }
 
     private function updateAnger(t:FlxBasic):Void {
@@ -44,5 +45,14 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
         FlxG.watch.addQuick("Metal", SoundManager.soundLevels.Metal);
         FlxG.watch.addQuick("Fight chance", citizen.fightChance);
         FlxG.watch.addQuick("Run chance", citizen.runChance);
+        FlxG.watch.addQuick("Suicide", citizen.killSelf);
+    }
+
+    private function updateSuicide():Void {
+        if (SoundManager.killAll) {
+            setAll("killSelf", true);
+        } else {
+            setAll("killSelf", false);
+        }
     }
 }

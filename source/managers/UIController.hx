@@ -1,4 +1,5 @@
 package managers;
+import flash.media.Sound;
 import PlayState;
 import flixel.util.FlxColor;
 import flixel.FlxG;
@@ -28,5 +29,11 @@ class UIController extends FlxGroup {
 
     override public function update():Void {
         super.update();
+
+        if (SoundManager.soundLevels.Metal >= 1) {
+            SoundManager.killAll = true;
+        } else {
+            SoundManager.killAll = false;
+        }
     }
 }
