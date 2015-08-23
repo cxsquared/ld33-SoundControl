@@ -105,11 +105,13 @@ class Citizen extends FlxSprite {
         this.color = FlxColorUtil.getRandomColor();
         //this.scale.y = FlxRandom.floatRanged(0.9, 1.1);
         animation.add("waiting", [0], 0, false);
-        animation.add("walking", [1,2,3,4,5,6], 12, true);
-        animation.add("fighting", [7, 8, 7], 6, true);
-        animation.add("punch", [9, 7], 6, false);
-        animation.add("dance", [10, 11, 12, 11, 12], 6, true);
-        animation.add("death", [13, 14, 15, 16, 17], 6, false);
+        animation.add("walking", [1,2,3,4], 6, true);
+        animation.add("fighting", [6, 7, 6], 6, true);
+        animation.add("punch", [8, 8, 8, 8, 8, 6], 6, false);
+        animation.add("dance", [9, 10, 11, 12, 11], 6, true);
+        animation.add("death", [12, 13, 14, 15, 16], 6, false);
+        animation.add("sleep", [17, 18, 19, 18, 19, 18], 6, true);
+        animation.add("workout", [20, 21, 22, 23, 22, 21], 6, true);
         animation.play("waiting");
 
         animation.callback = animCallback;
@@ -143,6 +145,14 @@ class Citizen extends FlxSprite {
             }
 
             if (dance()) {
+                return;
+            }
+
+            if (sleep()) {
+                return;
+            }
+
+            if (workout()) {
                 return;
             }
 
@@ -303,6 +313,14 @@ class Citizen extends FlxSprite {
         }
 
         return true;
+    }
+
+    private function workout():Bool {
+        return false;
+    }
+
+    private function sleep():Bool {
+        return false;
     }
 
     public function clearTasks():Void {
