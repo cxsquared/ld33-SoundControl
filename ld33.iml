@@ -18,46 +18,46 @@
     <orderEntry type="library" name="Flixel Addons" level="application" />
     <orderEntry type="library" name="Flixel Engine" level="application" />
     <orderEntry type="module-library">
-      <library name="haxelib|/Users/CodyClaborn/mac/openfl/3,2,2">
+      <library name="haxelib|C:/HaxeToolkit/haxe/lib/openfl/3,1,0">
         <CLASSES>
-          <root url="file://$USER_HOME$/mac/openfl/3,2,2" />
+          <root url="file://C:/HaxeToolkit/haxe/lib/openfl/3,1,0" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://$USER_HOME$/mac/openfl/3,2,2" />
+          <root url="file://C:/HaxeToolkit/haxe/lib/openfl/3,1,0" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="haxelib|/Users/CodyClaborn/mac/flixel-addons/1,1,0">
+      <library name="haxelib|C:/HaxeToolkit/haxe/lib/flixel-addons/1,1,0">
         <CLASSES>
-          <root url="file://$USER_HOME$/mac/flixel-addons/1,1,0" />
+          <root url="file://C:/HaxeToolkit/haxe/lib/flixel-addons/1,1,0" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://$USER_HOME$/mac/flixel-addons/1,1,0" />
+          <root url="file://C:/HaxeToolkit/haxe/lib/flixel-addons/1,1,0" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="haxelib|/Users/CodyClaborn/mac/flixel/3,3,11">
+      <library name="haxelib|C:/HaxeToolkit/haxe/lib/flixel/3,3,8">
         <CLASSES>
-          <root url="file://$USER_HOME$/mac/flixel/3,3,11" />
+          <root url="file://C:/HaxeToolkit/haxe/lib/flixel/3,3,8" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://$USER_HOME$/mac/flixel/3,3,11" />
+          <root url="file://C:/HaxeToolkit/haxe/lib/flixel/3,3,8" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="haxelib|/Users/CodyClaborn/mac/lime/2,5,2">
+      <library name="haxelib|C:/HaxeToolkit/haxe/lib/lime/2,4,4">
         <CLASSES>
-          <root url="file://$USER_HOME$/mac/lime/2,5,2" />
+          <root url="file://C:/HaxeToolkit/haxe/lib/lime/2,4,4" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://$USER_HOME$/mac/lime/2,5,2" />
+          <root url="file://C:/HaxeToolkit/haxe/lib/lime/2,4,4" />
         </SOURCES>
       </library>
     </orderEntry>

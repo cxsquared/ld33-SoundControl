@@ -40,6 +40,7 @@ class Citizen extends FlxSprite {
     //Suicide
     public var killSelf = false;
     private var suicideChance = 10;
+    private var dying = false;
 
     //Dance
     public var dancing = false;
@@ -108,7 +109,10 @@ class Citizen extends FlxSprite {
         animation.add("fighting", [7, 8, 7], 6, true);
         animation.add("punch", [9, 7], 6, false);
         animation.add("dance", [10, 11, 12, 11, 12], 6, true);
+        animation.add("death", [13, 14, 15, 16, 17], 6, false);
         animation.play("waiting");
+
+        animation.callback = animCallback;
     }
 
     override public function update():Void {
@@ -121,13 +125,11 @@ class Citizen extends FlxSprite {
         hair.y = this.y;
         hair.facing = this.facing;
 
-        if (health <= 0) {
-            nameText.kill();
-            hair.kill();
-            this.clearTasks();
+        if (health <= 0 && !dying) {
+            dying = true;
             this.kill();
         }
-        if (!waiting) {
+        if (!waiting && !dying) {
             if (walk()) {
                 return;
             }
@@ -156,7 +158,7 @@ class Citizen extends FlxSprite {
     }
 
     private function getNewTask(t:FlxTimer):Void {
-        if (waiting) {
+        if (waiting && !dying) {
             waiting = false;
             if (FlxRandom.chanceRoll(walkChance)){
                 walking = true;
@@ -307,6 +309,16 @@ class Citizen extends FlxSprite {
 
     override public function kill():Void {
         clearTasks();
-        super.kill();
+        nameText.kill();
+        hair.kill();
+        animation.play("death");
+    }
+
+    private function animCallback(name:String, frameNumber:Int, frameIndex:Int):Void {
+        FlxG.watch.addQuick("Frame Number", frameNumber);
+        FlxG.watch.addQuick("Frame Index", frameIndex);
+        if (name == "death" && frameNumber >= 4) {
+            super.kill();
+        }
     }
 }
