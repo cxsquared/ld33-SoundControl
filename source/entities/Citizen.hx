@@ -44,11 +44,26 @@ class Citizen extends FlxSprite {
 
     //Dance
     public var dancing = false;
-    public var danceChance:Float = 20;
+    public var danceChance:Float = 22;
     public var danceDeathChance = .1;
     private var danceTime:Float = 0;
     private var maxDanceTime = 10;
     public var danceQuitChance = .5;
+
+    // workout
+    public var workingout = false;
+    public var workoutChance:Float = 18;
+    public var workoutDeathChance = .15;
+    public var workoutTime:Float = 0;
+    public var maxWorkoutTime = 20;
+    public var workoutQuitChance = .5;
+
+    // Sleep
+    public var sleeping = false;
+    public var sleepChance:Float = 20;
+    public var sleepTime:Float = 0;
+    public var maxSleepTime = 30;
+    public var wakeUpChance = .6;
 
     public var name = "No One";
     private var nameText:FlxText;
@@ -110,7 +125,7 @@ class Citizen extends FlxSprite {
         animation.add("punch", [8, 8, 8, 8, 8, 6], 6, false);
         animation.add("dance", [9, 10, 11, 12, 11], 6, true);
         animation.add("death", [12, 13, 14, 15, 16], 6, false);
-        animation.add("sleep", [17, 18, 19, 18, 19, 18], 6, true);
+        animation.add("sleep", [17, 18, 19, 18, 19, 18], 3, true);
         animation.add("workout", [20, 21, 22, 23, 22, 21], 6, true);
         animation.play("waiting");
 
@@ -191,6 +206,12 @@ class Citizen extends FlxSprite {
             } else if (FlxRandom.chanceRoll(danceChance)) {
                 danceTime = 0;
                 dancing = true;
+            } else if (FlxRandom.chanceRoll(workoutChance)) {
+                workoutTime = 0;
+                workingout = true;
+            } else if (FlxRandom.chanceRoll(sleepChance)) {
+                sleepTime = 0;
+                sleeping = true;
             }
         }
     }
@@ -302,6 +323,7 @@ class Citizen extends FlxSprite {
 
         if (danceTime > maxDanceTime/4*3 && FlxRandom.chanceRoll(danceDeathChance)) {
             this.health = 0;
+            dancing = false;
             FlxG.log.add(name + " has Danced to death.");
             return false;
         }
@@ -316,11 +338,44 @@ class Citizen extends FlxSprite {
     }
 
     private function workout():Bool {
-        return false;
+        if (!workingout){
+            return false;
+        }
+
+        animation.play("workout");
+        workoutTime += FlxG.elapsed;
+
+        if (workoutTime > maxWorkoutTime*.85 && FlxRandom.chanceRoll(workoutDeathChance)) {
+            this.health = 0;
+            workingout = false;
+            FlxG.log.add(name + " worked out to death");
+            return false;
+        }
+
+        if (workoutTime > maxWorkoutTime || FlxRandom.chanceRoll(workoutQuitChance)) {
+            workingout = false;
+            workoutTime = 0;
+            return false;
+        }
+
+        return true;
     }
 
     private function sleep():Bool {
-        return false;
+        if (!sleeping) {
+            return false;
+        }
+
+        animation.play("sleep");
+        sleepTime += FlxG.elapsed;
+
+        if (sleepTime > maxSleepTime || FlxRandom.chanceRoll(wakeUpChance)) {
+            sleeping = false;
+            sleepTime = 0;
+            return false;
+        }
+
+        return true;
     }
 
     public function clearTasks():Void {

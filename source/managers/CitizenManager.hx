@@ -14,7 +14,7 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
     public var baseFightChance:Float = 15;
     public var baseRunChance:Float = .05;
 
-    public var baseDanceChance:Float = 20;
+    public var baseDanceChance:Float = 22;
     public var baseDanceToDeathChance:Float = .1;
     public var baseDanceQuitChance:Float = .5;
 
