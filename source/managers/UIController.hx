@@ -1,4 +1,5 @@
 package managers;
+import flixel.text.FlxText;
 import flixel.ui.FlxBar;
 import flash.media.Sound;
 import PlayState;
@@ -54,12 +55,24 @@ class UIController extends FlxGroup {
         var barHeight:Int = 10;
         angerBar = new FlxBar(offset/2, offset/2, FlxBar.FILL_LEFT_TO_RIGHT, barWidth, barHeight, state.citizens, "angerAverage", 0, 100);
         add(angerBar);
+        var angerText = new FlxText(angerBar.x, angerBar.y + angerBar.height, angerBar.width, "Anger");
+        angerText.alignment = "center";
+        add(angerText);
         sleepBar = new FlxBar(angerBar.x + angerBar.width + offset/2, offset/2, FlxBar.FILL_LEFT_TO_RIGHT, barWidth, barHeight, state.citizens, "sleepAverage", 0, 100);
         add(sleepBar);
+        var sleepText = new FlxText(sleepBar.x, sleepBar.y + sleepBar.height, sleepBar.width, "Sleep");
+        sleepText.alignment = "center";
+        add(sleepText);
         danceBar = new FlxBar(sleepBar.x + sleepBar.width  + offset/2, offset/2, FlxBar.FILL_LEFT_TO_RIGHT, barWidth, barHeight, state.citizens, "danceAverage", 0, 100);
         add(danceBar);
+        var danceText = new FlxText(danceBar.x, danceBar.y + danceBar.height, danceBar.width, "Dance");
+        danceText.alignment = "center";
+        add(danceText);
         exerciseBar = new FlxBar(danceBar.x + danceBar.width  + offset/2, offset/2, FlxBar.FILL_LEFT_TO_RIGHT, barWidth, barHeight, state.citizens, "exerciseAverage", 0, 100);
         add(exerciseBar);
+        var exerciseText = new FlxText(exerciseBar.x, exerciseBar.y + exerciseBar.height, exerciseBar.width, "Exercise");
+        exerciseText.alignment = "center";
+        add(exerciseText);
     }
 
     override public function update():Void {
