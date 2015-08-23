@@ -52,6 +52,9 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
         forEachAlive(updateDance);
         forEachAlive(updateSleep);
         forEachAlive(updateWorkout);
+        forEachAlive(updateZombie);
+        forEachAlive(updateRave);
+        forEachAlive(updateSlam);
         updateStats();
         updateSuicide();
     }
@@ -113,6 +116,37 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
         FlxG.watch.addQuick("Workout chance", citizen.workoutChance);
         FlxG.watch.addQuick("Workout To Death", citizen.workoutDeathChance);
         FlxG.watch.addQuick("Stop workout", citizen.workoutQuitChance);
+    }
+
+    private function updateZombie(t:FlxBasic):Void {
+        var citizen = cast(t, Citizen);
+        if (SoundManager.soundLevels.Metal > .85 && SoundManager.soundLevels.Chill > .85 && SoundManager.soundLevels.Dance < .25) {
+            citizen.zombieChance = 75;
+        } else {
+            citizen.zombieChance = 2.5;
+        }
+    }
+
+    private function updateRave(t:FlxBasic):Void {
+        var citizen = cast(t, Citizen);
+        if (state.disco.visible) {
+            citizen.raveChance = 90;
+        } else {
+            citizen.raveChance = 0;
+        }
+    }
+
+    private function updateSlam(t:FlxBasic):Void {
+        var citizen = cast(t, Citizen);
+        if (SoundManager.soundLevels.Dance > .85 && SoundManager.soundLevels.Metal > .85 && SoundManager.soundLevels.Chill < .35) {
+            if (SoundManager.soundLevels.Noise > .5) {
+                citizen.slamChance = 90;
+            } else {
+                citizen.slamChance = 70;
+            }
+        } else {
+            citizen.slamChance = 2.5;
+        }
     }
 
     private function updateStats():Void {

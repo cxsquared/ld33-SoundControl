@@ -107,7 +107,7 @@ class PlayState extends FlxState
 
         FlxG.collide(bounds, citizens);
 
-        if (SoundManager.soundLevels.Metal >= 1 && SoundManager.soundLevels.Dance >= 1 && SoundManager.soundLevels.Noise >= 1) {
+        if (SoundManager.soundLevels.Metal >= 1 && SoundManager.soundLevels.Dance >= 1 && SoundManager.soundLevels.Noise >= 1 && SoundManager.soundLevels.Chill <= 0) {
             disco.visible = true;
         } else {
             disco.visible = false;

@@ -57,6 +57,21 @@ class Citizen extends FlxSprite {
     private var maxDanceTime = 10;
     public var danceQuitChance = .5;
 
+    //Rave
+    public var raving = false;
+    public var raveChance:Float = 0;
+
+    // Slam
+    public var slamming = false;
+    public var slamChance:Float = 5;
+
+    // Zombie
+    public var zombieing = false;
+    public var zombieChance = 2.5;
+    private var zombieTarget:Citizen = null;
+    private var zombieTime:Float = 0;
+    private var maxZombieTime = 15;
+
     // workout
     public var workingout = false;
     public var workoutChance:Float = 18;
@@ -136,6 +151,9 @@ class Citizen extends FlxSprite {
         animation.add("death", [12, 13, 14, 15, 16], 6, false);
         animation.add("sleep", [17, 18, 19, 18, 19, 18], 3, true);
         animation.add("workout", [20, 21, 22, 23, 22, 21], 6, true);
+        animation.add("rave", [20, 24, 25, 26, 25, 24, 25, 26, 24, 25], 6, true);
+        animation.add("zombie", [27, 28], 3, true);
+        animation.add("slam", [10, 29, 30, 29, 31, 29, 11, 29], 6, true);
         animation.play("waiting");
 
         animation.callback = animCallback;
@@ -179,6 +197,18 @@ class Citizen extends FlxSprite {
             }
 
             if (workout()) {
+                return;
+            }
+
+            if (slam()) {
+                return;
+            }
+
+            if (zombie()) {
+                return;
+            }
+
+            if (rave()) {
                 return;
             }
 
@@ -260,6 +290,15 @@ class Citizen extends FlxSprite {
             } else if (FlxRandom.chanceRoll(sleepChance)) {
                 sleepTime = 0;
                 sleeping = true;
+            } else if (FlxRandom.chanceRoll(raveChance)) {
+                raving = true;
+                danceTime = 0;
+            } else if (FlxRandom.chanceRoll(slamChance)) {
+                slamming = true;
+                danceTime = 0;
+            } else if (FlxRandom.chanceRoll(zombieChance)) {
+                zombieing = true;
+                zombieTime = 0;
             }
         }
     }
@@ -457,6 +496,138 @@ class Citizen extends FlxSprite {
         return true;
     }
 
+    private function slam():Bool {
+        if (!slamming) {
+            return false;
+        }
+
+        animation.play("slam");
+        danceTime += FlxG.elapsed;
+
+        if (FlxRandom.chanceRoll(statDecreaseChance)){
+            danceStat += FlxRandom.floatRanged(3, 8);
+            angerStat -= FlxRandom.floatRanged(3, 8);
+            if (danceStat > 100) {
+                danceStat = 100;
+            }
+            if (angerStat < 0) {
+                angerStat = 0;
+            }
+        }
+
+        if (FlxRandom.chanceRoll(1)) {
+            if (facing == FlxObject.RIGHT){
+                facing = FlxObject.LEFT;
+            } else {
+                facing = FlxObject.RIGHT;
+            }
+        }
+
+        if (FlxRandom.chanceRoll(punchChance)) {
+            var target:Citizen = null;
+            var tries = 0;
+            while ((target == null || !target.alive) && tries < 5){
+                target = state.citizens.getRandom();
+                tries++;
+            }
+            if (tries < 5) {
+                target.health -= FlxRandom.floatRanged(0.05, .25);
+                (target.name + " has been slammed by " + name);
+            }
+        }
+
+        if (danceTime > maxDanceTime/4*3 && FlxRandom.chanceRoll(danceDeathChance)) {
+            this.health = 0;
+            slamming = false;
+            FlxG.log.add(name + " has slamed to death.");
+            return false;
+        }
+
+        if (danceTime > maxDanceTime) {
+            slamming = false;
+            danceTime = 0;
+            return false;
+        }
+
+        return true;
+    }
+
+    private function rave():Bool {
+        if (!raving) {
+            return false;
+        }
+        if (FlxRandom.chanceRoll(statDecreaseChance)){
+            danceStat += FlxRandom.floatRanged(3, 8);
+            exersiceStat += FlxRandom.floatRanged(3, 8);
+            if (danceStat > 100) {
+                danceStat = 100;
+            }
+            if (exersiceStat > 100) {
+                exersiceStat = 100;
+            }
+        }
+
+        if (FlxRandom.chanceRoll(1)) {
+            if (facing == FlxObject.RIGHT){
+                facing = FlxObject.LEFT;
+            } else {
+                facing = FlxObject.RIGHT;
+            }
+        }
+
+        if (danceTime > maxDanceTime/4*3 && FlxRandom.chanceRoll(danceDeathChance)) {
+            this.health = 0;
+            raving = false;
+            FlxG.log.add(name + " has raved to death.");
+            return false;
+        }
+
+        if (danceTime > maxDanceTime) {
+            raving = false;
+            danceTime = 0;
+            return false;
+        }
+
+        return true;
+    }
+
+    private function zombie():Bool {
+        if (!zombieing) {
+            return false;
+        }
+
+        animation.play("zombie");
+
+        if (FlxRandom.chanceRoll(punchChance)) {
+            var tries = 0;
+            while((zombieTarget == null || zombieTarget == this || !zombieTarget.alive) &&  tries < 5) {
+                zombieTarget = state.citizens.getRandom();
+                tries++;
+            }
+            if (tries < 5 && Math.abs(FlxMath.distanceBetween(this, zombieTarget)) < 100) {
+                zombieTarget.health -= FlxRandom.floatRanged(0.05, .25);
+                FlxG.log.add(zombieTarget + " was bitten by " + name);
+            }
+            zombieTarget = null;
+        }
+
+        if (FlxRandom.chanceRoll(runChance)){
+            zombieing = false;
+            zombieTarget = null;
+            return false;
+        }
+
+        zombieTime += FlxG.elapsed;
+        if (zombieTime > maxZombieTime) {
+            zombieing = false;
+            zombieTarget = null;
+            zombieTime = 0;
+            return false;
+        }
+
+        return true;
+    }
+
     public function clearTasks():Void {
         waiting = false;
         walking = false;
@@ -464,6 +635,10 @@ class Citizen extends FlxSprite {
         fighting = false;
         dancing = false;
         danceTime = 0;
+        zombieing = false;
+        raving = false;
+        slamming = false;
+        zombieTarget = null;
         fightTarget = null;
     }
 
