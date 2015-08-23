@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxTimer;
 import flixel.util.FlxColor;
 import managers.CitizenManager;
 import managers.SoundManager;
@@ -24,6 +25,7 @@ class PlayState extends FlxState
     public var citizens:CitizenManager;
     var ui:UIController;
     public var soundManager = new SoundManager();
+    private var citizenTimer = new FlxTimer();
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -45,6 +47,8 @@ class PlayState extends FlxState
 
         addCitizens();
         citizens.callAll("addHair");
+
+        citizenTimer.start(FlxRandom.floatRanged(30, 120), moreCitizens, 1);
 
 	}
 
@@ -68,6 +72,11 @@ class PlayState extends FlxState
         bounds.add(wall);
 
         add(bounds);
+    }
+
+    private function moreCitizens(t:FlxTimer):Void {
+        citizens.addCitizens(FlxRandom.intRanged(1, 3));
+        citizenTimer.start(FlxRandom.floatRanged(30, 120), moreCitizens, 1);
     }
 
     private function addCitizens():Void {

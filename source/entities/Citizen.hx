@@ -97,6 +97,7 @@ class Citizen extends FlxSprite {
     }
 
     public function addHair():Void {
+        /*
         hair = new FlxSprite(this.x, this.y);
         hair.loadGraphic(AssetPaths.hair__png, true, CITIZEN_WIDTH, 30);
         hair.animation.add("0", [0], 0, false);
@@ -111,6 +112,7 @@ class Citizen extends FlxSprite {
 
         hair.setFacingFlip(FlxObject.LEFT, true, false);
         hair.setFacingFlip(FlxObject.RIGHT, false, false);
+        */
     }
 
     private function addName():Void {
@@ -147,9 +149,9 @@ class Citizen extends FlxSprite {
         nameText.x = this.x + nameText.width/4;
         nameText.y = this.y - nameText.height;
 
-        hair.x = this.x;
-        hair.y = this.y;
-        hair.facing = this.facing;
+        //hair.x = this.x;
+        //hair.y = this.y;
+        //hair.facing = this.facing;
 
         if (health <= 0 && !dying) {
             dying = true;
@@ -195,7 +197,7 @@ class Citizen extends FlxSprite {
 
         if (FlxRandom.chanceRoll(statDecreaseChance)){
             var decrease = FlxRandom.intRanged(0, 3);
-            FlxG.log.add(name + " stat decrease");
+            //FlxG.log.add(name + " stat decrease");
             switch (decrease) {
                 case 0:
                     angerStat += FlxRandom.floatRanged(0.5, 3);
@@ -468,7 +470,7 @@ class Citizen extends FlxSprite {
     override public function kill():Void {
         clearTasks();
         nameText.kill();
-        hair.kill();
+       // hair.kill();
         animation.play("death");
     }
 
