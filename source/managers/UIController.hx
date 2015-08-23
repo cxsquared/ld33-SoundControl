@@ -1,4 +1,5 @@
 package managers;
+import flixel.ui.FlxBar;
 import flash.media.Sound;
 import PlayState;
 import flixel.util.FlxColor;
@@ -6,6 +7,11 @@ import flixel.FlxG;
 import flixel.addons.ui.FlxSlider;
 import flixel.group.FlxGroup;
 class UIController extends FlxGroup {
+
+    public var angerBar:FlxBar;
+    public var sleepBar:FlxBar;
+    public var exerciseBar:FlxBar;
+    public var danceBar:FlxBar;
 
     public var metalSldr:FlxSlider;
     public var danceSldr:FlxSlider;
@@ -22,6 +28,7 @@ class UIController extends FlxGroup {
         this.state = State;
 
         setUpSliders();
+        setUpBars();
     }
 
     private function setUpSliders():Void {
@@ -40,6 +47,19 @@ class UIController extends FlxGroup {
 
         noiseSldr = new FlxSlider(SoundManager.soundLevels, "Noise", FlxG.width*.75 - sliderwidth/2, (this.y + sliderheight + offset*3), 0, 1, sliderwidth, sliderheight, 3, FlxColor.WHEAT);
         add(noiseSldr);
+    }
+
+    private function setUpBars():Void {
+        var barWidth:Int = Std.int(FlxG.width/4 - offset/2);
+        var barHeight:Int = 10;
+        angerBar = new FlxBar(offset/2, offset/2, FlxBar.FILL_LEFT_TO_RIGHT, barWidth, barHeight, state.citizens, "angerAverage", 0, 100);
+        add(angerBar);
+        sleepBar = new FlxBar(angerBar.x + angerBar.width + offset/2, offset/2, FlxBar.FILL_LEFT_TO_RIGHT, barWidth, barHeight, state.citizens, "sleepAverage", 0, 100);
+        add(sleepBar);
+        danceBar = new FlxBar(sleepBar.x + sleepBar.width  + offset/2, offset/2, FlxBar.FILL_LEFT_TO_RIGHT, barWidth, barHeight, state.citizens, "danceAverage", 0, 100);
+        add(danceBar);
+        exerciseBar = new FlxBar(danceBar.x + danceBar.width  + offset/2, offset/2, FlxBar.FILL_LEFT_TO_RIGHT, barWidth, barHeight, state.citizens, "exerciseAverage", 0, 100);
+        add(exerciseBar);
     }
 
     override public function update():Void {

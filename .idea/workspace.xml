@@ -4,6 +4,8 @@
     <list default="true" id="b23be74e-fb6e-4718-a6cc-7be1cd1893b8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/entities/Citizen.hx" afterPath="$PROJECT_DIR$/source/entities/Citizen.hx" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/managers/CitizenManager.hx" afterPath="$PROJECT_DIR$/source/managers/CitizenManager.hx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/PlayState.hx" afterPath="$PROJECT_DIR$/source/PlayState.hx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/managers/UIController.hx" afterPath="$PROJECT_DIR$/source/managers/UIController.hx" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ld33.iws" />
@@ -71,17 +73,17 @@
         <entry file="file://$PROJECT_DIR$/source/PlayState.hx">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="69" column="30" selection-start-line="69" selection-start-column="30" selection-end-line="69" selection-end-column="30" />
+              <caret line="22" column="33" selection-start-line="22" selection-start-column="33" selection-end-line="22" selection-end-column="33" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CitizenManager.hx" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CitizenManager.hx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/managers/CitizenManager.hx">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.3137255">
-              <caret line="130" column="59" selection-start-line="130" selection-start-column="59" selection-end-line="130" selection-end-column="59" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="32" column="16" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -101,17 +103,27 @@
         <entry file="file://$PROJECT_DIR$/source/managers/UIController.hx">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="47" column="165" selection-start-line="47" selection-start-column="13" selection-end-line="47" selection-end-column="165" />
+              <caret line="54" column="108" selection-start-line="54" selection-start-column="108" selection-end-line="54" selection-end-column="108" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Citizen.hx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/entities/Citizen.hx">
+      <file leaf-file-name="FlxBar.hx" pinned="false" current-in-tab="false">
+        <entry file="file://C:/HaxeToolkit/haxe/lib/flixel/3,3,8/flixel/ui/FlxBar.hx">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="30" column="31" selection-start-line="30" selection-start-column="31" selection-end-line="30" selection-end-column="31" />
+              <caret line="133" column="31" selection-start-line="133" selection-start-column="31" selection-end-line="133" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Citizen.hx" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/source/entities/Citizen.hx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="1.2666667">
+              <caret line="225" column="54" selection-start-line="225" selection-start-column="54" selection-end-line="225" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -159,11 +171,11 @@
         <option value="$PROJECT_DIR$/Project.xml" />
         <option value="$PROJECT_DIR$/source/UIController.hx" />
         <option value="$PROJECT_DIR$/source/entities/SoundManager.hx" />
-        <option value="$PROJECT_DIR$/source/PlayState.hx" />
         <option value="$PROJECT_DIR$/source/managers/SoundManager.hx" />
+        <option value="$PROJECT_DIR$/source/PlayState.hx" />
         <option value="$PROJECT_DIR$/source/managers/UIController.hx" />
-        <option value="$PROJECT_DIR$/source/entities/Citizen.hx" />
         <option value="$PROJECT_DIR$/source/managers/CitizenManager.hx" />
+        <option value="$PROJECT_DIR$/source/entities/Citizen.hx" />
       </list>
     </option>
   </component>
@@ -588,12 +600,12 @@
       <workItem from="1378102502259" duration="247000" />
       <workItem from="1440214166001" duration="17762000" />
       <workItem from="1440269462515" duration="1965000" />
-      <workItem from="1440298504997" duration="9333000" />
+      <workItem from="1440298504997" duration="10248000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29895000" />
+    <option name="totallyTimeSpent" value="30810000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
@@ -837,10 +849,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://C:/HaxeToolkit/haxe/lib/flixel/3,3,8/flixel/ui/FlxBar.hx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="133" column="31" selection-start-line="133" selection-start-column="31" selection-end-line="133" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/source/PlayState.hx">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="69" column="30" selection-start-line="69" selection-start-column="30" selection-end-line="69" selection-end-column="30" />
+          <caret line="22" column="33" selection-start-line="22" selection-start-column="33" selection-end-line="22" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/managers/UIController.hx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="54" column="108" selection-start-line="54" selection-start-column="108" selection-end-line="54" selection-end-column="108" />
           <folding />
         </state>
       </provider>
@@ -853,26 +881,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/entities/Citizen.hx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="30" column="31" selection-start-line="30" selection-start-column="31" selection-end-line="30" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/managers/UIController.hx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="47" column="165" selection-start-line="47" selection-start-column="13" selection-end-line="47" selection-end-column="165" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/managers/CitizenManager.hx">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.3137255">
-          <caret line="130" column="59" selection-start-line="130" selection-start-column="59" selection-end-line="130" selection-end-column="59" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="16" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/entities/Citizen.hx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2666667">
+          <caret line="225" column="54" selection-start-line="225" selection-start-column="54" selection-end-line="225" selection-end-column="54" />
           <folding />
         </state>
       </provider>

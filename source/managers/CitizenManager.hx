@@ -24,6 +24,11 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
     public var baseWorkoutDieChance = .15;
     public var baseWorkoutQuitChance = .6;
 
+    public var angerAverage:Float = 0;
+    public var sleepAverage:Float = 0;
+    public var danceAverage:Float = 0;
+    public var exerciseAverage:Float = 0;
+
     public function new(State:PlayState = null) {
         super();
         this.state = State;
@@ -124,6 +129,11 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
                 exerciseAvg += c.exersiceStat;
             }
         }
+
+        angerAverage = angerAvg / countLiving();
+        sleepAverage = danceAvg / countLiving();
+        danceAverage = sleepAvg / countLiving();
+        exerciseAverage = exerciseAvg / countLiving();
 
         FlxG.watch.addQuick("Anger Average", angerAvg / countLiving());
         FlxG.watch.addQuick("Dance Average", danceAvg / countLiving());

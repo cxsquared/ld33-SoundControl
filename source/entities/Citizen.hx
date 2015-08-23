@@ -198,13 +198,13 @@ class Citizen extends FlxSprite {
             FlxG.log.add(name + " stat decrease");
             switch (decrease) {
                 case 0:
-                    angerStat += FlxRandom.floatRanged(0.5, 5);
+                    angerStat += FlxRandom.floatRanged(0.5, 3);
                 case 1:
-                    danceStat -= FlxRandom.floatRanged(0.5, 5);
+                    danceStat -= FlxRandom.floatRanged(0.5, 3);
                 case 2:
-                    sleepStat -= FlxRandom.floatRanged(0.5, 5);
+                    sleepStat -= FlxRandom.floatRanged(0.5, 3);
                 case 3:
-                    exersiceStat -= FlxRandom.floatRanged(0.5, 5);
+                    exersiceStat -= FlxRandom.floatRanged(0.5, 3);
             }
         }
 
@@ -223,7 +223,7 @@ class Citizen extends FlxSprite {
         }
 
         if (badStats >= 3 && FlxRandom.chanceRoll(statDecreaseChance)) {
-            health -= FlxRandom.floatRanged(0.05, 0.5);
+            health -= FlxRandom.floatRanged(0.05, 0.25);
             FlxG.log.add(name + " has bad stats " + health);
         }
     }
@@ -321,7 +321,7 @@ class Citizen extends FlxSprite {
         }
 
         if (FlxRandom.chanceRoll(statDecreaseChance)) {
-            angerStat -= FlxRandom.floatRanged(.5, 5);
+            angerStat -= FlxRandom.floatRanged(3, 8);
             if (angerStat < 0) {
                 angerStat = 0;
             }
@@ -366,7 +366,7 @@ class Citizen extends FlxSprite {
         animation.play("dance");
         danceTime += FlxG.elapsed;
         if (FlxRandom.chanceRoll(statDecreaseChance)){
-            danceStat += FlxRandom.floatRanged(.5, 5);
+            danceStat += FlxRandom.floatRanged(3, 8);
             if (danceStat > 100) {
                 danceStat = 100;
             }
@@ -405,7 +405,7 @@ class Citizen extends FlxSprite {
         workoutTime += FlxG.elapsed;
 
         if (FlxRandom.chanceRoll(statDecreaseChance)) {
-            exersiceStat += FlxRandom.floatRanged(.5, 5);
+            exersiceStat += FlxRandom.floatRanged(3, 8);
             if (exersiceStat > 100) {
                 exersiceStat = 100;
             }
@@ -440,7 +440,7 @@ class Citizen extends FlxSprite {
             if (health > 1){
                 health = 1;
             }
-            sleepStat += FlxRandom.floatRanged(.5, 5);
+            sleepStat += FlxRandom.floatRanged(3, 8);
             if (sleepStat > 100) {
                 sleepStat = 100;
             }

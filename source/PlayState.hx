@@ -31,12 +31,12 @@ class PlayState extends FlxState
 	{
 		super.create();
 
+        citizens = new CitizenManager(this);
+
         ui = new UIController(this, FlxG.height/3*2);
         add(ui);
 
         setUpBounds();
-
-
 
         addCitizens();
         citizens.callAll("addHair");
@@ -66,7 +66,6 @@ class PlayState extends FlxState
     }
 
     private function addCitizens():Void {
-        citizens = new CitizenManager(this);
         citizens.addCitizens(5);
         add(citizens);
     }
