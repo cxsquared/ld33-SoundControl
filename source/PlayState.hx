@@ -24,7 +24,7 @@ class PlayState extends FlxState
     var bounds:FlxTypedGroup<FlxSprite>;
     public var citizens:CitizenManager;
     var ui:UIController;
-    public var soundManager = new SoundManager();
+    //public var soundManager = new SoundManager();
     private var citizenTimer = new FlxTimer();
     public var disco = new FlxSprite();
 
@@ -34,6 +34,8 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		super.create();
+
+        SoundManager.init();
 
         var background = new FlxSprite(0,0);
         background.loadGraphic(AssetPaths.background__png);
@@ -104,6 +106,7 @@ class PlayState extends FlxState
 	override public function update():Void
 	{
 		super.update();
+        SoundManager.update();
 
         FlxG.collide(bounds, citizens);
 
