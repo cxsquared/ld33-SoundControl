@@ -18,6 +18,12 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
     public var baseDanceToDeathChance:Float = .1;
     public var baseDanceQuitChance:Float = .5;
 
+    public var baseSleepChance:Float = 20;
+
+    public var baseWorkoutChane = 18;
+    public var baseWorkoutDieChance = .15;
+    public var baseWorkoutQuitChance = .6;
+
     public function new(State:PlayState = null) {
         super();
         this.state = State;
@@ -39,6 +45,8 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
     private function updateEmotions():Void {
         forEachAlive(updateAnger);
         forEachAlive(updateDance);
+        forEachAlive(updateSleep);
+        forEachAlive(updateWorkout);
         updateSuicide();
     }
 
@@ -59,10 +67,14 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
 
     private function updateDance(t:FlxBasic):Void {
         var citizen = cast(t, Citizen);
-        citizen.danceChance = Math.max(baseDanceChance * Math.pow(SoundManager.soundLevels.Dance * 2, 2), baseChance);
+        if (SoundManager.soundLevels.Chill > .55) {
+            citizen.danceChance = Math.max(baseDanceChance * Math.pow(SoundManager.soundLevels.Dance * 2 - SoundManager.soundLevels.Chill/1.5, 2), baseChance);
+        } else {
+            citizen.danceChance = Math.max(baseDanceChance * Math.pow(SoundManager.soundLevels.Dance * 2, 2), baseChance);
+        }
         if (SoundManager.soundLevels.Dance > .75) {
             citizen.danceDeathChance = baseDanceToDeathChance * SoundManager.soundLevels.Dance * 1.5;
-            citizen.danceQuitChance = baseDanceQuitChance / Math.pow(SoundManager.soundLevels.Metal * 1.5, 2);
+            citizen.danceQuitChance = baseDanceQuitChance / Math.pow(SoundManager.soundLevels.Dance * 1.5, 2);
         } else {
             citizen.danceDeathChance = baseDanceToDeathChance;
             citizen.danceQuitChance = baseDanceQuitChance;
@@ -70,6 +82,31 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
         FlxG.watch.addQuick("Dance Chance", citizen.danceChance);
         FlxG.watch.addQuick("Dance To Death", citizen.danceDeathChance);
         FlxG.watch.addQuick("Stop Dance", citizen.danceQuitChance);
+    }
+
+    private function updateSleep(t:FlxBasic):Void {
+        var citizen = cast(t, Citizen);
+        if (SoundManager.soundLevels.Metal >= .75 || SoundManager.soundLevels.Dance >= .75 || SoundManager.soundLevels.Noise >= .75) {
+            citizen.sleepChance = 0;
+        } else {
+            citizen.sleepChance = Math.max(baseSleepChance * Math.pow(SoundManager.soundLevels.Chill * 2, 2), baseChance);
+        }
+        FlxG.watch.addQuick("Chance to sleep", citizen.sleepChance);
+    }
+
+    private function updateWorkout(t:FlxBasic):Void {
+        var citizen = cast(t, Citizen);
+        citizen.workoutChance = Math.max(baseWorkoutChane * Math.pow(((SoundManager.soundLevels.Dance * 2)+(SoundManager.soundLevels.Chill * 2))/2, 2), baseChance);
+        if (SoundManager.soundLevels.Dance > .75 && SoundManager.soundLevels.Chill > .75) {
+            citizen.workoutDeathChance = baseWorkoutDieChance * SoundManager.soundLevels.Dance * 1.5;
+            citizen.workoutQuitChance = baseWorkoutQuitChance * SoundManager.soundLevels.Chill * 1.5;
+        } else {
+            citizen.workoutDeathChance = baseWorkoutDieChance;
+            citizen.workoutQuitChance = baseWorkoutQuitChance;
+        }
+        FlxG.watch.addQuick("Workout chance", citizen.workoutChance);
+        FlxG.watch.addQuick("Workout To Death", citizen.workoutDeathChance);
+        FlxG.watch.addQuick("Stop workout", citizen.workoutQuitChance);
     }
 
     private function updateSuicide():Void {
