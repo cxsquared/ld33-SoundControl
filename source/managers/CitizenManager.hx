@@ -47,6 +47,7 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
         forEachAlive(updateDance);
         forEachAlive(updateSleep);
         forEachAlive(updateWorkout);
+        updateStats();
         updateSuicide();
     }
 
@@ -107,6 +108,27 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
         FlxG.watch.addQuick("Workout chance", citizen.workoutChance);
         FlxG.watch.addQuick("Workout To Death", citizen.workoutDeathChance);
         FlxG.watch.addQuick("Stop workout", citizen.workoutQuitChance);
+    }
+
+    private function updateStats():Void {
+        var angerAvg:Float = 0;
+        var danceAvg:Float = 0;
+        var sleepAvg:Float = 0;
+        var exerciseAvg:Float = 0;
+        for (citizen in this.members) {
+            var c:Citizen = cast(citizen, Citizen);
+            if (c.alive) {
+                angerAvg += c.angerStat;
+                danceAvg += c.danceStat;
+                sleepAvg += c.sleepStat;
+                exerciseAvg += c.exersiceStat;
+            }
+        }
+
+        FlxG.watch.addQuick("Anger Average", angerAvg / countLiving());
+        FlxG.watch.addQuick("Dance Average", danceAvg / countLiving());
+        FlxG.watch.addQuick("Sleep Average", sleepAvg / countLiving());
+        FlxG.watch.addQuick("Exercise Average", exerciseAvg / countLiving());
     }
 
     private function updateSuicide():Void {

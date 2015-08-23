@@ -19,6 +19,13 @@ class Citizen extends FlxSprite {
     public static var WAIT_TIME_MIN = 0.5;
     public static var WAIT_TIME_MAX = 3;
 
+    //State
+    public var angerStat:Float = 0;
+    public var danceStat:Float = 100;
+    public var exersiceStat:Float = 100;
+    public var sleepStat:Float = 100;
+    private var statDecreaseChance = 2.5;
+
     //Walk
     public var walkChance:Float = 50;
     public var walking = false;
@@ -135,6 +142,8 @@ class Citizen extends FlxSprite {
     override public function update():Void {
         super.update();
 
+        updateStats();
+
         nameText.x = this.x + nameText.width/4;
         nameText.y = this.y - nameText.height;
 
@@ -179,6 +188,43 @@ class Citizen extends FlxSprite {
             waiting = true;
             animation.play("waiting");
             //FlxG.log.add(name + " new timer started");
+        }
+    }
+
+    private function updateStats():Void {
+
+        if (FlxRandom.chanceRoll(statDecreaseChance)){
+            var decrease = FlxRandom.intRanged(0, 3);
+            FlxG.log.add(name + " stat decrease");
+            switch (decrease) {
+                case 0:
+                    angerStat += FlxRandom.floatRanged(0.5, 5);
+                case 1:
+                    danceStat -= FlxRandom.floatRanged(0.5, 5);
+                case 2:
+                    sleepStat -= FlxRandom.floatRanged(0.5, 5);
+                case 3:
+                    exersiceStat -= FlxRandom.floatRanged(0.5, 5);
+            }
+        }
+
+        var badStats = 0;
+        if (angerStat > 90) {
+            badStats++;
+        }
+        if (danceStat < 10) {
+            badStats++;
+        }
+        if (sleepStat < 15) {
+            badStats++;
+        }
+        if (exersiceStat < 5) {
+            badStats++;
+        }
+
+        if (badStats >= 3 && FlxRandom.chanceRoll(statDecreaseChance)) {
+            health -= FlxRandom.floatRanged(0.05, 0.5);
+            FlxG.log.add(name + " has bad stats " + health);
         }
     }
 
@@ -274,6 +320,13 @@ class Citizen extends FlxSprite {
             return true;
         }
 
+        if (FlxRandom.chanceRoll(statDecreaseChance)) {
+            angerStat -= FlxRandom.floatRanged(.5, 5);
+            if (angerStat < 0) {
+                angerStat = 0;
+            }
+        }
+
         animation.play("fighting");
 
         if (FlxRandom.chanceRoll(punchChance)) {
@@ -312,6 +365,12 @@ class Citizen extends FlxSprite {
 
         animation.play("dance");
         danceTime += FlxG.elapsed;
+        if (FlxRandom.chanceRoll(statDecreaseChance)){
+            danceStat += FlxRandom.floatRanged(.5, 5);
+            if (danceStat > 100) {
+                danceStat = 100;
+            }
+        }
 
         if (FlxRandom.chanceRoll(1)) {
             if (facing == FlxObject.RIGHT){
@@ -345,6 +404,13 @@ class Citizen extends FlxSprite {
         animation.play("workout");
         workoutTime += FlxG.elapsed;
 
+        if (FlxRandom.chanceRoll(statDecreaseChance)) {
+            exersiceStat += FlxRandom.floatRanged(.5, 5);
+            if (exersiceStat > 100) {
+                exersiceStat = 100;
+            }
+        }
+
         if (workoutTime > maxWorkoutTime*.85 && FlxRandom.chanceRoll(workoutDeathChance)) {
             this.health = 0;
             workingout = false;
@@ -368,6 +434,17 @@ class Citizen extends FlxSprite {
 
         animation.play("sleep");
         sleepTime += FlxG.elapsed;
+
+        if (FlxRandom.chanceRoll(statDecreaseChance)) {
+            health += FlxRandom.floatRanged(0.05, 0.5);
+            if (health > 1){
+                health = 1;
+            }
+            sleepStat += FlxRandom.floatRanged(.5, 5);
+            if (sleepStat > 100) {
+                sleepStat = 100;
+            }
+        }
 
         if (sleepTime > maxSleepTime || FlxRandom.chanceRoll(wakeUpChance)) {
             sleeping = false;
