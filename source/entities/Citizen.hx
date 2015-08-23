@@ -44,7 +44,7 @@ class Citizen extends FlxSprite {
 
     //Dance
     public var dancing = false;
-    public var danceChance = 20;
+    public var danceChance:Float = 20;
     public var danceDeathChance = .1;
     private var danceTime:Float = 0;
     private var maxDanceTime = 10;
@@ -282,6 +282,14 @@ class Citizen extends FlxSprite {
         animation.play("dance");
         danceTime += FlxG.elapsed;
 
+        if (FlxRandom.chanceRoll(1)) {
+            if (facing == FlxObject.RIGHT){
+                facing = FlxObject.LEFT;
+            } else {
+                facing = FlxObject.RIGHT;
+            }
+        }
+
         if (danceTime > maxDanceTime/4*3 && FlxRandom.chanceRoll(danceDeathChance)) {
             this.health = 0;
             FlxG.log.add(name + " has Danced to death.");
@@ -315,8 +323,8 @@ class Citizen extends FlxSprite {
     }
 
     private function animCallback(name:String, frameNumber:Int, frameIndex:Int):Void {
-        FlxG.watch.addQuick("Frame Number", frameNumber);
-        FlxG.watch.addQuick("Frame Index", frameIndex);
+        //FlxG.watch.addQuick("Frame Number", frameNumber);
+        //FlxG.watch.addQuick("Frame Index", frameIndex);
         if (name == "death" && frameNumber >= 4) {
             super.kill();
         }
