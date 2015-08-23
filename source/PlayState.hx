@@ -26,6 +26,7 @@ class PlayState extends FlxState
     var ui:UIController;
     public var soundManager = new SoundManager();
     private var citizenTimer = new FlxTimer();
+    public var disco = new FlxSprite();
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -49,6 +50,10 @@ class PlayState extends FlxState
         citizens.callAll("addHair");
 
         citizenTimer.start(FlxRandom.floatRanged(30, 120), moreCitizens, 1);
+
+        disco.loadGraphic(AssetPaths.disco__png);
+        disco.visible = false;
+        add(disco);
 
 	}
 
@@ -101,5 +106,11 @@ class PlayState extends FlxState
 		super.update();
 
         FlxG.collide(bounds, citizens);
+
+        if (SoundManager.soundLevels.Metal >= 1 && SoundManager.soundLevels.Dance >= 1 && SoundManager.soundLevels.Noise >= 1) {
+            disco.visible = true;
+        } else {
+            disco.visible = false;
+        }
 	}
 }
