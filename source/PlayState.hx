@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxColor;
 import managers.CitizenManager;
 import managers.SoundManager;
 import managers.UIController;
@@ -31,6 +32,10 @@ class PlayState extends FlxState
 	{
 		super.create();
 
+        var background = new FlxSprite(0,0);
+        background.loadGraphic(AssetPaths.background__png);
+        add(background);
+
         citizens = new CitizenManager(this);
 
         ui = new UIController(this, FlxG.height/3*2);
@@ -46,18 +51,18 @@ class PlayState extends FlxState
     private function setUpBounds():Void {
         bounds = new FlxTypedGroup<FlxSprite>();
         var floor = new FlxSprite(0, FlxG.height/3*2);
-        floor.makeGraphic(FlxG.width, 20);
+        floor.makeGraphic(FlxG.width, 20, FlxColor.TRANSPARENT);
         floor.immovable = true;
         bounds.add(floor);
 
         var wall = new FlxSprite(0, 0);
-        wall.makeGraphic(20, Std.int(FlxG.height/3*2));
+        wall.makeGraphic(20, Std.int(FlxG.height/3*2), FlxColor.TRANSPARENT);
         wall.x -= wall.width/2;
         wall.immovable = true;
         bounds.add(wall);
 
         var wall = new FlxSprite(FlxG.width, 0);
-        wall.makeGraphic(20, Std.int(FlxG.height/3*2));
+        wall.makeGraphic(20, Std.int(FlxG.height/3*2), FlxColor.TRANSPARENT);
         wall.x -= wall.width/2;
         wall.immovable = true;
         bounds.add(wall);
