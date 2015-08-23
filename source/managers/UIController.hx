@@ -53,7 +53,7 @@ class UIController extends FlxGroup {
     private function setUpBars():Void {
         var barWidth:Int = Std.int(FlxG.width/4 - offset/2);
         var barHeight:Int = 10;
-        angerBar = new FlxBar(offset/2, offset/2, FlxBar.FILL_LEFT_TO_RIGHT, barWidth, barHeight, state.citizens, "angerAverage", 0, 100);
+        angerBar = new FlxBar(offset/4, offset/2, FlxBar.FILL_LEFT_TO_RIGHT, barWidth, barHeight, state.citizens, "angerAverage", 0, 100);
         add(angerBar);
         var angerText = new FlxText(angerBar.x, angerBar.y + angerBar.height, angerBar.width, "Anger");
         angerText.alignment = "center";

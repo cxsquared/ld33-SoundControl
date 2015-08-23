@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b23be74e-fb6e-4718-a6cc-7be1cd1893b8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/PlayState.hx" afterPath="$PROJECT_DIR$/source/PlayState.hx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/managers/UIController.hx" afterPath="$PROJECT_DIR$/source/managers/UIController.hx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ld33.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -108,8 +109,8 @@
       <file leaf-file-name="UIController.hx" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source/managers/UIController.hx">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.1803921">
-              <caret line="72" column="101" selection-start-line="72" selection-start-column="101" selection-end-line="72" selection-end-column="101" />
+            <state vertical-scroll-proportion="0.78039217">
+              <caret line="60" column="68" selection-start-line="60" selection-start-column="68" selection-end-line="60" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -180,8 +181,8 @@
         <option value="$PROJECT_DIR$/source/managers/SoundManager.hx" />
         <option value="$PROJECT_DIR$/source/managers/CitizenManager.hx" />
         <option value="$PROJECT_DIR$/source/entities/Citizen.hx" />
-        <option value="$PROJECT_DIR$/source/managers/UIController.hx" />
         <option value="$PROJECT_DIR$/source/PlayState.hx" />
+        <option value="$PROJECT_DIR$/source/managers/UIController.hx" />
       </list>
     </option>
   </component>
@@ -630,12 +631,12 @@
       <workItem from="1378102502259" duration="247000" />
       <workItem from="1440214166001" duration="17762000" />
       <workItem from="1440269462515" duration="1965000" />
-      <workItem from="1440298504997" duration="11239000" />
+      <workItem from="1440298504997" duration="11303000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31801000" />
+    <option name="totallyTimeSpent" value="31865000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
@@ -659,7 +660,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.45491388" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.45491388" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -930,8 +931,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source/managers/UIController.hx">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.1803921">
-          <caret line="72" column="101" selection-start-line="72" selection-start-column="101" selection-end-line="72" selection-end-column="101" />
+        <state vertical-scroll-proportion="0.78039217">
+          <caret line="60" column="68" selection-start-line="60" selection-start-column="68" selection-end-line="60" selection-end-column="68" />
           <folding />
         </state>
       </provider>
