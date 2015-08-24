@@ -1,4 +1,5 @@
 package managers;
+import flixel.util.FlxColorUtil;
 import flixel.text.FlxText;
 import flixel.ui.FlxBar;
 import flash.media.Sound;
@@ -21,6 +22,7 @@ class UIController extends FlxGroup {
     public var y:Float = 0;
     public static var offset = 20;
     private var state:PlayState;
+    public static var deathText:FlxText;
 
     public function new(State:PlayState=null, Y:Float=0) {
         super();
@@ -30,6 +32,7 @@ class UIController extends FlxGroup {
 
         setUpSliders();
         setUpBars();
+        setUpDeathText();
     }
 
     private function setUpSliders():Void {
@@ -73,6 +76,17 @@ class UIController extends FlxGroup {
         var exerciseText = new FlxText(exerciseBar.x, exerciseBar.y + exerciseBar.height, exerciseBar.width, "Exercise");
         exerciseText.alignment = "center";
         add(exerciseText);
+    }
+
+    private function setUpDeathText():Void {
+        deathText = new FlxText(0, this.y + 5, FlxG.width, "");
+        deathText.alignment = "center";
+        add(deathText);
+    }
+
+    public static function updateDeathText(text:String):Void {
+        deathText.text = text;
+        deathText.color = FlxColorUtil.getRandomColor();
     }
 
     override public function update():Void {

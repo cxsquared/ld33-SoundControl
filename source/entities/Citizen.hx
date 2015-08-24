@@ -1,4 +1,5 @@
 package entities;
+import managers.UIController;
 import flixel.text.FlxText;
 import flixel.FlxObject;
 import flixel.FlxBasic;
@@ -257,6 +258,9 @@ class Citizen extends FlxSprite {
         if (badStats >= 3 && FlxRandom.chanceRoll(statDecreaseChance)) {
             health -= FlxRandom.floatRanged(0.05, 0.25);
             FlxG.log.add(name + " has bad stats " + health);
+            if (health <= 0) {
+                UIController.updateDeathText("You've let " + name + " die!");
+            }
         }
     }
 
@@ -339,6 +343,7 @@ class Citizen extends FlxSprite {
         if (FlxRandom.chanceRoll(suicideChance)) {
             health = 0;
             FlxG.log.add(name + " killed themselves!!");
+            UIController.updateDeathText(name + " has killed themselves!!!");
             return true;
         }
 
@@ -373,12 +378,15 @@ class Citizen extends FlxSprite {
         if (FlxRandom.chanceRoll(punchChance)) {
             fightTarget.health -= FlxRandom.float();
             animation.play("punch");
+            var blood = new Blood(fightTarget.x + fightTarget.width/2, fightTarget.y + fightTarget.height/4, facing);
+            state.blood.add(blood);
             FlxG.log.add(name + " Punched! " + fightTarget.name + ". They now have " + fightTarget.health + " health left.");
         }
 
         if (!fightTarget.alive) {
             fighting = false;
             FlxG.log.add(name + " killed " + fightTarget.name);
+            UIController.updateDeathText(fightTarget.name + " was punched to death by " + name);
             fightTarget = null;
             animation.play("waiting");
             return false;
@@ -425,6 +433,7 @@ class Citizen extends FlxSprite {
             this.health = 0;
             dancing = false;
             FlxG.log.add(name + " has Danced to death.");
+            UIController.updateDeathText(name + " has danced themselves to death.");
             return false;
         }
 
@@ -456,6 +465,7 @@ class Citizen extends FlxSprite {
             this.health = 0;
             workingout = false;
             FlxG.log.add(name + " worked out to death");
+            UIController.updateDeathText(name + " has worked out to death!");
             return false;
         }
 
@@ -532,7 +542,12 @@ class Citizen extends FlxSprite {
             }
             if (tries < 5) {
                 target.health -= FlxRandom.floatRanged(0.05, .25);
-                (target.name + " has been slammed by " + name);
+                FlxG.log.add(target.name + " has been slammed by " + name);
+                var blood = new Blood(target.x + target.width/2, target.y + target.height/4, facing);
+                state.blood.add(blood);
+                if (target.health <= 0) {
+                    UIController.updateDeathText(target.name + " has been slam danced to death by " + name);
+                }
             }
         }
 
@@ -540,6 +555,7 @@ class Citizen extends FlxSprite {
             this.health = 0;
             slamming = false;
             FlxG.log.add(name + " has slamed to death.");
+            UIController.updateDeathText(name + " has slam danced to death.");
             return false;
         }
 
@@ -579,6 +595,7 @@ class Citizen extends FlxSprite {
             this.health = 0;
             raving = false;
             FlxG.log.add(name + " has raved to death.");
+            UIController.updateDeathText(name + " has raved to death.");
             return false;
         }
 
@@ -606,7 +623,12 @@ class Citizen extends FlxSprite {
             }
             if (tries < 5 && Math.abs(FlxMath.distanceBetween(this, zombieTarget)) < 100) {
                 zombieTarget.health -= FlxRandom.floatRanged(0.05, .25);
-                FlxG.log.add(zombieTarget + " was bitten by " + name);
+                FlxG.log.add(zombieTarget.name + " was bitten by " + name);
+                var blood = new Blood(zombieTarget.x + zombieTarget.width/2, zombieTarget.y + zombieTarget.height/4, facing);
+                state.blood.add(blood);
+                if (zombieTarget.health <= 0) {
+                    UIController.updateDeathText(zombieTarget.name + " was bitten to death by " + name);
+                }
             }
             zombieTarget = null;
         }
@@ -644,6 +666,8 @@ class Citizen extends FlxSprite {
 
     override public function kill():Void {
         clearTasks();
+        var blood = new Blood(this.x + this.width/2, this.y + this.height/4, facing);
+        state.blood.add(blood);
         nameText.kill();
        // hair.kill();
         animation.play("death");

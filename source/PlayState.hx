@@ -1,5 +1,6 @@
 package;
 
+import entities.Blood;
 import flixel.util.FlxTimer;
 import flixel.util.FlxColor;
 import managers.CitizenManager;
@@ -27,6 +28,9 @@ class PlayState extends FlxState
     //public var soundManager = new SoundManager();
     private var citizenTimer = new FlxTimer();
     public var disco = new FlxSprite();
+    public var blood = new FlxTypedGroup<Blood>();
+
+    var floor:FlxSprite;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -57,25 +61,30 @@ class PlayState extends FlxState
         disco.visible = false;
         add(disco);
 
+        add(blood);
+
 	}
 
     private function setUpBounds():Void {
         bounds = new FlxTypedGroup<FlxSprite>();
-        var floor = new FlxSprite(0, FlxG.height/3*2);
+        floor = new FlxSprite(0, FlxG.height/3*2);
         floor.makeGraphic(FlxG.width, 20, FlxColor.TRANSPARENT);
         floor.immovable = true;
+        floor.solid = true;
         bounds.add(floor);
 
         var wall = new FlxSprite(0, 0);
         wall.makeGraphic(20, Std.int(FlxG.height/3*2), FlxColor.TRANSPARENT);
         wall.x -= wall.width/2;
         wall.immovable = true;
+        wall.solid = true;
         bounds.add(wall);
 
         var wall = new FlxSprite(FlxG.width, 0);
         wall.makeGraphic(20, Std.int(FlxG.height/3*2), FlxColor.TRANSPARENT);
         wall.x -= wall.width/2;
         wall.immovable = true;
+        wall.solid = true;
         bounds.add(wall);
 
         add(bounds);
@@ -109,6 +118,7 @@ class PlayState extends FlxState
         SoundManager.update();
 
         FlxG.collide(bounds, citizens);
+        FlxG.collide(floor, blood);
 
         if (SoundManager.soundLevels.Metal >= 1 && SoundManager.soundLevels.Dance >= 1 && SoundManager.soundLevels.Noise >= 1 && SoundManager.soundLevels.Chill <= 0) {
             disco.visible = true;

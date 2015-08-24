@@ -15,6 +15,9 @@ class SoundManager {
 
     public static function init() {
         FlxG.log.add("Sound itniut");
+        soundLevels.Metal = 0;
+        soundLevels.Noise = 0;
+        soundLevels.Dance = 0;
         metal.loadEmbedded(AssetPaths.metal__mp3, true, false);
         metal.play();
         dance.loadEmbedded(AssetPaths.dance__mp3, true, false);

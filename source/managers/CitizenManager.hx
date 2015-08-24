@@ -121,10 +121,11 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
     private function updateZombie(t:FlxBasic):Void {
         var citizen = cast(t, Citizen);
         if (SoundManager.soundLevels.Metal > .85 && SoundManager.soundLevels.Chill > .85 && SoundManager.soundLevels.Dance < .25) {
-            citizen.zombieChance = 75;
+            citizen.zombieChance = 90;
         } else {
             citizen.zombieChance = 2.5;
         }
+        FlxG.watch.addQuick("Zombie Chance", citizen.zombieChance);
     }
 
     private function updateRave(t:FlxBasic):Void {
@@ -134,6 +135,7 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
         } else {
             citizen.raveChance = 0;
         }
+        FlxG.watch.addQuick("Rave Chance", citizen.raveChance);
     }
 
     private function updateSlam(t:FlxBasic):Void {
@@ -147,6 +149,7 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
         } else {
             citizen.slamChance = 2.5;
         }
+        FlxG.watch.addQuick("Slam Chance", citizen.slamChance);
     }
 
     private function updateStats():Void {
