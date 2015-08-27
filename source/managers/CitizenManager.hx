@@ -29,6 +29,9 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
     public var danceAverage:Float = 0;
     public var exerciseAverage:Float = 0;
 
+    private var loops = 0;
+    private var scored = false;
+
     public function new(State:PlayState = null) {
         super();
         this.state = State;
@@ -39,12 +42,20 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
             var citizen = new Citizen(FlxRandom.floatRanged(50, FlxG.width-50), 200, state);
             add(citizen);
         }
+        scored = false;
+        loops = 0;
     }
 
     override public function update():Void {
         super.update();
 
         updateEmotions();
+
+        if (loops >= 60 && !scored) {
+            AchievementManager.submitScore(countLiving());
+            scored = true;
+        }
+        loops++;
     }
 
     private function updateEmotions():Void {
@@ -57,6 +68,7 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
         forEachAlive(updateSlam);
         updateStats();
         updateSuicide();
+        updateAchievements();
     }
 
     private function updateAnger(t:FlxBasic):Void {
@@ -176,6 +188,27 @@ class CitizenManager extends FlxTypedGroup<Citizen> {
         FlxG.watch.addQuick("Dance Average", danceAvg / countLiving());
         FlxG.watch.addQuick("Sleep Average", sleepAvg / countLiving());
         FlxG.watch.addQuick("Exercise Average", exerciseAvg / countLiving());
+    }
+
+    private function updateAchievements():Void {
+        var numFighting = 0;
+        var numSleeping = 0;
+        for (c in this.members) {
+            var citizen = cast(c, Citizen);
+            if (citizen.alive) {
+                if (citizen.sleeping){
+                    numSleeping++;
+                } else if (citizen.fighting) {
+                    numFighting++;
+                }
+            }
+        }
+
+        if (numFighting >= countLiving()) {
+            AchievementManager.unlockFightClub();
+        } else if (numSleeping >= countLiving()) {
+            AchievementManager.unlockBored();
+        }
     }
 
     private function updateSuicide():Void {

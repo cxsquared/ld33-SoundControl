@@ -1,4 +1,5 @@
 package entities;
+import managers.AchievementManager;
 import managers.UIController;
 import flixel.text.FlxText;
 import flixel.FlxObject;
@@ -174,6 +175,7 @@ class Citizen extends FlxSprite {
 
         if (health <= 0 && !dying) {
             dying = true;
+            AchievementManager.addDead();
             this.kill();
         }
         if (!waiting && !dying) {
@@ -260,6 +262,7 @@ class Citizen extends FlxSprite {
             FlxG.log.add(name + " has bad stats " + health);
             if (health <= 0) {
                 UIController.updateDeathText("You've let " + name + " die!");
+                AchievementManager.unlockYouAreTheMonster();
             }
         }
     }

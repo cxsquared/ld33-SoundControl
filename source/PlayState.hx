@@ -1,5 +1,6 @@
 package;
 
+import managers.AchievementManager;
 import entities.Blood;
 import flixel.util.FlxTimer;
 import flixel.util.FlxColor;
@@ -39,6 +40,7 @@ class PlayState extends FlxState
 	{
 		super.create();
 
+        AchievementManager.init();
         SoundManager.init();
 
         var background = new FlxSprite(0,0);
@@ -55,7 +57,7 @@ class PlayState extends FlxState
         addCitizens();
         citizens.callAll("addHair");
 
-        citizenTimer.start(FlxRandom.floatRanged(30, 120), moreCitizens, 1);
+        citizenTimer.start(FlxRandom.floatRanged(30, 60), moreCitizens, 1);
 
         disco.loadGraphic(AssetPaths.disco__png);
         disco.visible = false;
@@ -92,7 +94,7 @@ class PlayState extends FlxState
 
     private function moreCitizens(t:FlxTimer):Void {
         citizens.addCitizens(FlxRandom.intRanged(1, 3));
-        citizenTimer.start(FlxRandom.floatRanged(30, 120), moreCitizens, 1);
+        citizenTimer.start(FlxRandom.floatRanged(15, 100), moreCitizens, 1);
     }
 
     private function addCitizens():Void {
@@ -122,6 +124,7 @@ class PlayState extends FlxState
 
         if (SoundManager.soundLevels.Metal >= 1 && SoundManager.soundLevels.Dance >= 1 && SoundManager.soundLevels.Noise >= 1 && SoundManager.soundLevels.Chill <= 0) {
             disco.visible = true;
+            AchievementManager.unlockRaveMaster();
         } else {
             disco.visible = false;
         }
